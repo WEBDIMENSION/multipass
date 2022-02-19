@@ -1,0 +1,18 @@
+---
+# tasks file for roles/yarn
+
+- name: check installed yarn
+  command: bash -lc "yarn --version"
+  register: yarn_exists
+  changed_when: False
+  ignore_errors: yes
+
+- name: Install yarn
+  become: true
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - yarn
+  when:
+    - yarn_exists is failed

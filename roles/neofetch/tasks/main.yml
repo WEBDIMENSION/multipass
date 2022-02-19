@@ -1,0 +1,6 @@
+---
+# tasks file for roles/neofetch
+- include: ubuntu20.yml
+  when:
+    - ansible_distribution == "Ubuntu"
+    - ansible_distribution_major_version == "20"

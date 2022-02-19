@@ -1,0 +1,37 @@
+---
+# tasks file for roles/ansible
+
+- name: check installed ansible
+  command: bash -lc "ansible --version"
+  register: ansible_exists
+  changed_when: False
+  ignore_errors: yes
+
+- name: ansible install when not installed
+  command: bash -lc "pip3 install --user ansible"
+  when:
+    - ansible_exists is failed
+    - ansible_state == 'present'
+
+- name: debug pip uninstall ansible
+  debug:
+    msg: "{{ ansible_exists }}"
+  when:
+    - ansible_exists is succeeded
+    - ansible_state == "absent"
+
+- name: ansible uninstall
+  command: bash -lc "pip3 uninstall -y ansible-base"
+  when:
+    - ansible_exists is succeeded
+    - ansible_state == "absent"
+
+# OS branch start
+- include: ubuntu20.yml
+  when:
+    - ansible_distribution == "Ubuntu"
+    - ansible_distribution_major_version == "20"
+    - ansible_exists is failed
+    - ansible_state == 'present'
+
+# OS branch end

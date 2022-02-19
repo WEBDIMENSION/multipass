@@ -1,0 +1,11 @@
+---
+# tasks file for ansible
+# For ubuntu18
+- name: ansible dependencies install ubuntu18
+  become: true
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - sshpass
+

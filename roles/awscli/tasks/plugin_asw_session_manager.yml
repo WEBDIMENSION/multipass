@@ -1,0 +1,28 @@
+---
+# tasks file for role/awscli
+- name: check installed awscli_plugin_session_manager
+  command: bash -lc "session-manager-plugin"
+  register: awscli_plugin_session_manager_exists
+  changed_when: False
+  ignore_errors: yes
+
+- name: Download awscli_plugin_session_manager
+  get_url:
+    url: https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_64bit/session-manager-plugin.deb
+    dest: ./session-manager-plugin.deb
+  when: awscli_plugin_session_manager_exists is failed
+
+
+- name: Install awscli_plugin_session_manager
+  become: true
+  command: bash -lc " dpkg -i session-manager-plugin.deb"
+  when: awscli_plugin_session_manager_exists is failed
+
+
+- name: CleanUP awscli_plugin_session_manager
+  file:
+    state: absent
+    path: "{{ item }}"
+  with_items:
+    -  ./session-manager-plugin.deb
+  when:  awscli_plugin_session_manager_exists is failed

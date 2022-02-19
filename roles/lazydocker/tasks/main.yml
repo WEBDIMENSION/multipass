@@ -1,0 +1,7 @@
+---
+# tasks file for roles/lazydocker
+
+- include: ubuntu20.yml
+  when:
+    - ansible_distribution == "Ubuntu"
+    - ansible_distribution_major_version == "20"

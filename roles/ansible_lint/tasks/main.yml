@@ -1,0 +1,12 @@
+---
+# tasks file for roles/ansible-lint
+- name: Check ansible-lint installed
+  command: bash -lc "pip list | grep  ansible-lint "
+  register: check_ansible_lint_install
+  changed_when: False
+  ignore_errors: yes
+
+- name: install ansible-lint
+  command: bash -lc "{{ pyenv_path }}/shims/pip install ansible-lint"
+  when: check_ansible_lint_install is failed
+# tasks file for roles/ansible-lint

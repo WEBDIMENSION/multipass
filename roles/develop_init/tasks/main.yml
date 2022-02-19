@@ -1,0 +1,53 @@
+---
+# tasks file for roles/develop-init
+- name: Exist init file
+  stat:
+    path: "{{ develop_init_path }}"
+  register: init_file
+  changed_when: False
+  ignore_errors: yes
+
+- name: debug
+  debug:
+    msg: "{{ develop_init_path }}"
+
+- name: Chmod
+  file:
+    path: "{{ develop_init_path }}"
+    owner: "{{ ansible_env.USER }}"
+    mode: "{{ develop_init_file_mode }}"
+  when: init_file.stat.mode != develop_init_file_mode
+
+- name: Debdug
+  debug:
+    msg: "{{ develop_init_file_mode }}"
+
+- name: Debdug
+  debug:
+    msg: "{{ init_file.stat.mode }}"
+
+- name: Init develop setting
+  command:  "{{ develop_init_path }} {{ develop_init_file_param }}"
+  changed_when: False
+  register: develop_init
+  when: init_file.stat.exists
+
+- name: Get zsh path
+  command:  bash -lc "which zsh"
+  register: zsh_path
+  changed_when: False
+  ignore_errors: yes
+
+- name: Debug zsh path
+  debug:
+    msg: "{{ zsh_path.stdout }}"
+
+- name: Debdug curent shell
+  debug:
+    msg: "{{ ansible_env.SHELL }}"
+
+- name: Change login shell zsh
+  become: true
+  command: "chsh -s {{ zsh_path.stdout }} {{ ansible_env.USER }}"
+  when: zsh_path.stdout != ansible_env.SHELL
+

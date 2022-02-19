@@ -1,0 +1,10 @@
+---
+# tasks file for roles/tests
+- name: tests | exec testinfra
+  command: |
+    bash -lc "py.test -v tests/testinfra.py"
+  args:
+    chdir: "{{ deploy_path }}"
+  when: True
+
+

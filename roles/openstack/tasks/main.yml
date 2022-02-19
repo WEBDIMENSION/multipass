@@ -1,0 +1,15 @@
+---
+# tasks file for roles/openstack
+- name: Check testinfra installed
+  command: bash -lc "openstack --version"
+  register: check_openstack_install
+  changed_when: False
+  ignore_errors: yes
+
+- name: debug pip uninstall ansible
+  debug:
+    msg: "{{ check_openstack_install }}"
+
+- name: install openstack
+  command: bash -lc "{{ pyenv_path }}/shims/pip install python-openstackclient"
+  when: check_openstack_install is failed

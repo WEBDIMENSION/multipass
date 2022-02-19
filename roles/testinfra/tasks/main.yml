@@ -1,0 +1,11 @@
+---
+# tasks file for roles/testinfra
+- name: Check testinfra installed
+  shell: bash -lc "pip list | grep  testinfra "
+  register: check_testinfra_install
+  changed_when: False
+  ignore_errors: yes
+
+- name: install testinfra
+  command: bash -lc "{{ pyenv_path }}/shims/pip install testinfra"
+  when: check_testinfra_install is failed
