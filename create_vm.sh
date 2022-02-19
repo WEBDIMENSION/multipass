@@ -12,13 +12,13 @@ echo "####   Check python version    #####"
 echo "python version: "$pv
 echo -e -n "\n"
 
-if [ $pv != $PYTHON_VERSION ]; then
+if [ $pv != "$PYTHON_VERSION" ]; then
 	echo -e -n "\n"
 	echo "###################################"
 	echo "pyenv install $PYTHON_VERSION"
 	echo "###################################"
-	pyenv install $PYTHON_VERSION
-	pyenv local $PYTHON_VERSION
+	pyenv install "$PYTHON_VERSION"
+	pyenv local "$PYTHON_VERSION"
 fi
 
 echo -e -n "\n"
@@ -44,14 +44,14 @@ echo -e -n "\n"
 echo "###################################"
 echo "###       ansible-lint          ###"
 echo "###################################"
-ansible-lint site.yml
+ansible-lint  site.yml
 
 echo -e -n "\n"
 echo "###################################"
 echo "###       cloud-config          ###"
 echo "###################################"
-AUTHORIZED_KEYS_ID_RSA=$(cat $RSA_PUB_FILE_NAME)
-AUTHORIZED_KEYS_ANSIBLE_RSA=$(cat $ANSIBLE_RSA_PUB_FILE_NAME)
+AUTHORIZED_KEYS_ID_RSA=$(cat "$RSA_PUB_FILE_NAME")
+AUTHORIZED_KEYS_ANSIBLE_RSA=$(cat "$ANSIBLE_RSA_PUB_FILE_NAME")
 cat > ./cloud-config.yaml << _EOF_
 ---
 locale: en_US.UTF8
@@ -98,4 +98,11 @@ echo -e -n "\n"
 echo "###################################"
 echo "###   Exec ansible playbook     ###"
 echo "###################################"
-ansible-playbook -i hosts/multipass site.yml -l multipass -t tests
+
+echo "$DEVELOP_INIT"
+if [ "$DEVELOP_INIT" == 'true' ]; then
+#	ansible-playbook -i hosts/multipass site.yml -l multipass
+	ansible-playbook -i hosts/multipass site.yml -l multipass -t tests
+else
+	ansible-playbook -i hosts/multipass site.yml -l multipass --skip-tags develop_init
+fi

@@ -29,7 +29,14 @@ VM_VERSION=20.04
 CLOUD_INIT=./cloud-config.yaml
 MOUNT_WORKSPACE_HOST=/CloudStation/workspace # Mount dir host
 MOUNT_WORKSPACE_VM=/home/ubuntu/workspace  # Mount dir vm
+DEVELOP_INIT=fale  # Ansible roles/develop_init true: exec   false: skip
 ```
+
+### What Roles/develop_init?
+ 
+>Roles for installation of personal installations (git pull, file copy...)
+ 
+> 個人的な設置のインストール用ロール (git pull, file copy...)
 
 ### Create VM
 ```bash

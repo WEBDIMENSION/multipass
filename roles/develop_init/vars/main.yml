@@ -1,2 +1,3 @@
 ---
 # vars file for roles/develop-init
+develop_init_path: "{{ home_path }}/workspace/develop/environment/init.sh"
