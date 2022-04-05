@@ -1,0 +1,17 @@
+---
+# tasks file for roles/shellcheck
+- name: Check shellcheck installed
+  command: bash -lc "shellcheck --version"
+  register: check_shellcheck_install
+  changed_when: False
+  ignore_errors: yes
+
+- name: install shellcheck
+  become: true
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - shellcheck
+  when: check_shellcheck_install is failed
+

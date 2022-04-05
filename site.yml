@@ -138,6 +138,18 @@
     - role: direnv
       tags:
         - direnv
+    - role: shellcheck
+      tags:
+        - shellcheck
+    - role: bats
+      tags:
+        - bats
+    - role: bashdb
+      tags:
+        - bashdb
+    - role: snapd
+      tags:
+        - snapd
     - role: develop_init
       tags:
         - develop_init

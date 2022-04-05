@@ -1,0 +1,49 @@
+---
+# tasks file for roles/bashdb
+- name: Check bashdb installed
+  command: bash -lc "bashdb --version"
+  register: check_bashdb_install
+  changed_when: False
+  ignore_errors: yes
+
+- name:  bashdb | Download
+  become: yes
+  get_url:
+    url: "https://sourceforge.net/projects/bashdb/files/bashdb/{{ bashdb_version }}/bashdb-{{ bashdb_version }}.tar.gz/download?use_mirror=jaist&use_mirror=jaist&r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fbashdb%2Ffiles%2Fbashdb%2F{{ bashdb_version }}%2F"
+    dest: "/tmp/bashdb.tar.gz"
+  when: check_bashdb_install is failed
+
+- name: bashdb | unarchive
+  become: yes
+  #  shell: "tar -xzf /tmp/softether.tar.gz -C {{softether_home}}"
+  unarchive: src="/tmp/bashdb.tar.gz" dest="/usr/local/src" remote_src=yes
+  when: check_bashdb_install is failed
+
+- name: bashdb | configure
+  become: yes
+  shell: "./configure"
+  args:
+    chdir: "/usr/local/src/bashdb-{{ bashdb_version }}"
+  when: check_bashdb_install is failed
+
+- name: bashdb | make
+  become: yes
+  shell: 'make'
+  args:
+    chdir: "/usr/local/src/bashdb-{{ bashdb_version }}"
+  when: check_bashdb_install is failed
+
+- name: bashdb | make check
+  become: yes
+  ignore_errors: yes
+  shell: 'make check'
+  args:
+    chdir: "/usr/local/src/bashdb-{{ bashdb_version }}"
+  when: check_bashdb_install is failed
+
+- name: bashdb | install
+  become: yes
+  shell: 'make install'
+  args:
+    chdir: "/usr/local/src/bashdb-{{ bashdb_version }}"
+  when: check_bashdb_install is failed

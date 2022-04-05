@@ -56,3 +56,6 @@ oh_my_zsh_theme: 'suvash'
 #global
 global_state: "present"
 global_version: '6.6.3'
+
+#bahdb
+bashdb_version: 5.0-1.1.2

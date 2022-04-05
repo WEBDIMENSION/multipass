@@ -1,0 +1,16 @@
+---
+# tasks file for roles/bats
+- name: Check bats installed
+  command: bash -lc "bats --version"
+  register: check_bats_install
+  changed_when: False
+  ignore_errors: yes
+
+- name: install bats
+  become: true
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - bats
+  when: check_bats_install is failed
