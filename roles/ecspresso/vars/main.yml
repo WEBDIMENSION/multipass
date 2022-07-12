@@ -1,0 +1,3 @@
+---
+# vars file for roles/ecspresso
+espresso_version: "1.7.12"

@@ -132,6 +132,9 @@
     - role: tfenv
       tags:
         - tfenv
+    - role: ecspresso
+      tags:
+        - ecspresso
     - role: mycli
       tags:
         - mycli
@@ -150,6 +153,9 @@
     - role: snapd
       tags:
         - snapd
+    - role: hadolint
+      tags:
+        - hadolint
     - role: develop_init
       tags:
         - develop_init

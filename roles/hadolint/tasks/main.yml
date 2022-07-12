@@ -1,0 +1,29 @@
+---
+# tasks file for roles/hadolint
+- name: check installed hadolint
+  command: bash -lc "which hadolint"
+  register: hadolint_exists
+  changed_when: False
+  ignore_errors: yes
+
+- name: download hadolint
+  become: true
+  get_url:
+    url: https://github.com/hadolint/hadolint/releases/download/v2.10.0/hadolint-Linux-x86_64
+    dest: /tmp
+
+
+- name: install hadolint
+  become: true
+  command: mv /tmp/hadolint-Linux-x86_64 /usr/local/bin/hadolint
+  when: hadolint_exists is failed
+
+- name: Change file ownership, group and permissions
+  become: true
+  file:
+    path: /usr/local/bin/hadolint
+    owner: root
+    group: root
+    mode: '0755'
+  when: hadolint_exists is failed
+

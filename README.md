@@ -16,7 +16,7 @@
 ## Usage
 
 ### Edit env
-```bash
+```ini
 PYTHON_VERSION=3.9.8
 RSA_FILE_NAME=~/.ssh/id_rsa # your secret_key
 RSA_PUB_FILE_NAME=~/.ssh/id_rsa.pub # your public_key 
