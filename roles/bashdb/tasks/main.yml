@@ -15,35 +15,33 @@
 
 - name: bashdb | unarchive
   become: yes
-  #  shell: "tar -xzf /tmp/softether.tar.gz -C {{softether_home}}"
   unarchive: src="/tmp/bashdb.tar.gz" dest="/usr/local/src" remote_src=yes
   when: check_bashdb_install is failed
 
 - name: bashdb | configure
   become: yes
-  shell: "./configure"
+  command: "./configure"
   args:
     chdir: "/usr/local/src/bashdb-{{ bashdb_version }}"
   when: check_bashdb_install is failed
 
 - name: bashdb | make
   become: yes
-  shell: 'make'
+  command: 'make'
   args:
     chdir: "/usr/local/src/bashdb-{{ bashdb_version }}"
   when: check_bashdb_install is failed
 
-- name: bashdb | make check
-  become: yes
-  ignore_errors: yes
-  shell: 'make check'
-  args:
-    chdir: "/usr/local/src/bashdb-{{ bashdb_version }}"
-  when: check_bashdb_install is failed
-
+#- name: bashdb | make check
+#  become: yes
+#  command: 'make check'
+#  args:
+#    chdir: "/usr/local/src/bashdb-{{ bashdb_version }}"
+#  when: check_bashdb_install is failed
+#
 - name: bashdb | install
   become: yes
-  shell: 'make install'
+  command: 'make install'
   args:
     chdir: "/usr/local/src/bashdb-{{ bashdb_version }}"
   when: check_bashdb_install is failed

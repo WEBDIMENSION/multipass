@@ -8,13 +8,13 @@
 
 - name: nodenv install when not installed
   git:
-    repo: git://github.com/nodenv/nodenv.git
+    repo: https://github.com/nodenv/nodenv.git
     dest: "{{ nodenv_path }}"
   when: nodenv_exists is failed
 
 - name: nodenv-build install when not installed
   git:
-    repo: git://github.com/nodenv/node-build.git
+    repo: https://github.com/nodenv/node-build.git
     dest: "{{ nodenv_path }}/plugins/node-build"
   when: nodenv_exists is failed
 
