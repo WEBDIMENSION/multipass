@@ -11,6 +11,7 @@
   get_url:
     url: https://github.com/kayac/ecspresso/releases/download/v{{ espresso_version }}/ecspresso_{{ espresso_version }}_linux_amd64.tar.gz
     dest: /tmp
+  when: ecspresso_exists is failed
 
 - name: unarchive
   become: true

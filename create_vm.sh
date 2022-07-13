@@ -79,6 +79,7 @@ echo "###################################"
 echo "###         Create VM           ###"
 echo "###################################"
 multipass launch -c "${CPU}" -m "${MEMORY}" -d "${DISK_SIZE}" -n "${VM_NAME}" "${VM_VERSION}" --cloud-init "${CLOUD_INIT}"
+sleep 30
 
 echo -e -n "\n"
 echo "###################################"

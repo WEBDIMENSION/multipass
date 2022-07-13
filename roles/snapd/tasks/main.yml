@@ -1,13 +1,13 @@
 ---
 # tasks file for roles/snapd
 - name: Check snapd installed
-  command: bash -lc "snapd --version"
-  register: check_snapd_install
+  command: bash -lc "snap --version"
+  register: check_snap_install
   changed_when: False
   ignore_errors: yes
 
 - name: install snapd
   become: true
   command: "snap install shfmt"
-  when: check_snapd_install is failed
+  when: check_snap_install is failed
 

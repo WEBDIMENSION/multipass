@@ -10,6 +10,7 @@
   git:
     repo:  https://github.com/tfutils/tfenv.git
     dest: "~/.tfenv"
+  when: check_tfenv_install is failed
 
 - name: Path for trenv
   blockinfile:

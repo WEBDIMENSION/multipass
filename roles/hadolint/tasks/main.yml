@@ -11,6 +11,7 @@
   get_url:
     url: https://github.com/hadolint/hadolint/releases/download/v2.10.0/hadolint-Linux-x86_64
     dest: /tmp
+  when: hadolint_exists is failed
 
 
 - name: install hadolint
