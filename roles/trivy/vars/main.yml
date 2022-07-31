@@ -1,0 +1,7 @@
+---
+# vars file for roles/trivy
+
+trivy_dependencies:
+  - wget
+  - gnupg
+  - lsb-release

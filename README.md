@@ -1,9 +1,10 @@
 # Development environment for Mac ( multipass )
 
 ## Required apps (必要アプリ)
-
-- multipass
+- shellcheck
 - pyenv
+- ansible-lint
+- multipass
 
 ## Purpose (目的)
 

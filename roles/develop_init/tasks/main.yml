@@ -14,7 +14,7 @@
 - name: Chmod
   file:
     path: "{{ develop_init_path }}"
-    owner: "{{ ansible_env.USER }}"
+#    owner: "{{ ansible_env.USER }}"
     mode: "{{ develop_init_file_mode }}"
 
 - name: Debdug

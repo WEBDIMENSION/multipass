@@ -156,6 +156,9 @@
     - role: hadolint
       tags:
         - hadolint
+    - role: trivy
+      tags:
+        - trivy
     - role: develop_init
       tags:
         - develop_init

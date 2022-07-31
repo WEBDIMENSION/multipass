@@ -4,7 +4,8 @@
 hostname: 'develop.ubuntu'
 
 home_path: "{{ ansible_env.HOME }}"
-deploy_path: "{{ home_path }}/workspace/develop/ansible/multipass"
+workspace: "workspace"
+deploy_path: "{{ home_path }}/{{ workspace }}/develop/ansible/multipass"
 develop_init_file_param: "i"
 develop_init_file_mode: "0775"
 login_shell: 'zsh'
@@ -59,3 +60,6 @@ global_version: '6.6.3'
 
 #bahdb
 bashdb_version: 5.0-1.1.2
+
+nfs_share_dirs:
+  -

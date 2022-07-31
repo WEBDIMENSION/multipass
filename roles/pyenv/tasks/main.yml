@@ -1,15 +1,15 @@
 ---
 # tasks file for roles/pyenv
-- name: check exists .python-version
-  stat:
-    path: "{{ deploy_path }}/.python-version"
-  register: check_exists_python_version
-
-- name: Remove .python-version
-  file:
-    path: "{{ deploy_path }}/.python-version"
-    state: absent
-  when: check_exists_python_version.stat.exists
+#- name: check exists .python-version
+#  stat:
+#    path: "{{ deploy_path }}/.python-version"
+#  register: check_exists_python_version
+#
+#- name: Remove .python-version
+#  file:
+#    path: "{{ deploy_path }}/.python-version"
+#    state: absent
+#  when: check_exists_python_version.stat.exists
 
 - name: check installed pyenv
   command: bash -lc "pyenv --version"
