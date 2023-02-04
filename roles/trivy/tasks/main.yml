@@ -14,26 +14,52 @@
   with_items: "{{ trivy_dependencies }}"
   when: trivy_exists is failed
 
-- name: Get trivy-repo/deb/public.key
-  become: true
-  shell: "wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | apt-key add -"
-  when: trivy_exists is failed
 
+# - name: Get trivy-repo/deb/public.key
+#   become: true
+#   ansible.builtin.apt_key:
+#     url: https://aquasecurity.github.io/trivy-repo/deb/public.key
+# #  command: "wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | apt-key add -"
+#   when: trivy_exists is failed
+#
+#
+# - name: Install trivy repo
+#   become: true
+#   shell: "echo deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main | tee -a /etc/apt/sources.list.d/trivy.list"
+#   when: trivy_exists is failed
+#
+# - name: apt update
+#   become: true
+#   apt:
+#     update_cache: yes
+#     cache_valid_time: 3600
+#   when: trivy_exists is failed
+#
+# - name: Install trivy
+#   become: true
+#   apt:
+#     name: "trivy"
+#     state: present
 
 - name: Install trivy repo
   become: true
-  shell: "echo deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main | tee -a /etc/apt/sources.list.d/trivy.list"
+  apt_key:
+    url: "https://aquasecurity.github.io/trivy-repo/deb/public.key"
+  when: trivy_exists is failed
+
+- name: Install trivy list
+  become: true
+  shell: 'echo deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main | sudo tee -a /etc/apt/sources.list.d/trivy.list'
   when: trivy_exists is failed
 
 - name: apt update
   become: true
   apt:
     update_cache: yes
-    cache_valid_time: 3600
   when: trivy_exists is failed
 
 - name: Install trivy
   become: true
   apt:
-    name: "trivy"
-    state: present
+    name: trivy
+  when: trivy_exists is failed

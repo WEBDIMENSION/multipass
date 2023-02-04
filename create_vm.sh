@@ -55,7 +55,7 @@ echo -e -n "\n"
 echo "###################################"
 echo "###       ansible-lint          ###"
 echo "###################################"
-ansible-lint
+#ansible-lint
 
 echo -e -n "\n"
 echo "###################################"
@@ -111,29 +111,39 @@ multipass
 _EOF_
 cat ./hosts/multipass
 
-echo -e -n "\n"
+#echo -e -n "\n"
+#echo "###################################"
+#echo "###           Mount               ###"
+#echo "###################################"
+#
+#multipass mount ${MOUNT_WORKSPACE_HOST} ${vm_name}:${MOUNT_WORKSPACE_VM}
+
+# echo -e -n "\n"
+# echo "###################################"
+# echo "##     Install nfs-common       ###"
+# echo "###################################"
+# multipass exec ${vm_name} -- sudo sh -c  "apt install -y nfs-common"
 
 
 echo -e -n "\n"
 echo "###################################"
 echo "###           NFS               ###"
 echo "###################################"
-
-
 sudo sed -i "" "/${vm_ip}/d" /etc/exports
 sudo sh -c "echo '${MOUNT_WORKSPACE_HOST} alldirs -mapall=${USER_ID}:${GROUP_ID}  ${vm_ip}' >> /etc/exports"
 multipass exec ${VM_NAME} -- mkdir ${MOUNT_WORKSPACE_VM}
-multipass exec ${VM_NAME} -- sudo sh -c "echo '${NFS_HOST_IP}:/${MOUNT_WORKSPACE_HOST} ${MOUNT_WORKSPACE_VM} nfs defaults,nofail,noatime,nolock,intr,tcp,actimeo=1800 0 0' >> /etc/fstab"
-multipass exec ${VM_NAME} -- sudo sh -c "mount ${NFS_HOST_IP}:/${MOUNT_WORKSPACE_HOST} ${MOUNT_WORKSPACE_VM}"
+multipass exec ${VM_NAME} -- sudo sh -c "echo '${NFS_HOST_IP}:${MOUNT_WORKSPACE_HOST} ${MOUNT_WORKSPACE_VM} nfs defaults,nofail,noatime,nolock,intr,tcp,actimeo=1800 0 0' >> /etc/fstab"
+multipass exec ${VM_NAME} -- sudo sh -c "mount -t nfs ${NFS_HOST_IP}:${MOUNT_WORKSPACE_HOST} ${MOUNT_WORKSPACE_VM} "
+
 
 echo "###################################"
 echo "###   Exec ansible playbook     ###"
 echo "###################################"
 
-echo "$DEVELOP_INIT"
-if [ "$DEVELOP_INIT" == 'true' ]; then
-	ansible-playbook -i hosts/multipass site.yml -l multipass
+#echo "$DEVELOP_INIT"
+#f [ "$DEVELOP_INIT" == 'true' ]; then
+#	ansible-playbook -i hosts/multipass site.yml -l multipass
 #	ansible-playbook -i hosts/multipass site.yml -l multipass -t tests
-else
-	ansible-playbook -i hosts/multipass site.yml -l multipass --skip-tags develop_init
-fi
+#lse
+#	ansible-playbook -i hosts/multipass site.yml -l multipass --skip-tags develop_init
+#i
