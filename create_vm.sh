@@ -95,7 +95,7 @@ echo -e -n "\n"
 echo "###################################"
 echo "###      VM IP address          ###"
 echo "###################################"
-vm_ip=$(multipass info develop | grep IPv4 | awk '{ print $2 }')
+vm_ip=$(multipass info ${VM_NAME} | grep IPv4 | awk '{ print $2 }')
 echo "ipv4 : ${vm_ip}"
 
 echo -e -n "\n"
