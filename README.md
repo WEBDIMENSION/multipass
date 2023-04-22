@@ -215,4 +215,3 @@ ps -ef | grep -i multipass | awk '{print "sudo kill -9 "$2}' | sh
 ## License
 
 MIT
-
